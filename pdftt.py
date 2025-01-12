@@ -98,7 +98,7 @@ def pdf_to_text(source, target, cache=None, num_threads=2, min_page=1, max_page=
   _generate_cache_dir(cache)
 
   info = pdfinfo(source)
-  page_count = info.get('Pages', 10)
+  page_count = info.get('Pages', 1)
   if max_page and max_page < page_count:
     page_count = max_page
   page_digit = _num_digit(page_count)
@@ -130,15 +130,14 @@ def pdf_to_text(source, target, cache=None, num_threads=2, min_page=1, max_page=
 
 if __name__ == '__main__':
   import argparse
-  from uuid import uuid4
 
   parser = argparse.ArgumentParser(prog='pdftt',
                                    description='converts pdf to txt, requires poppler and tesseract-ocr')
   parser.add_argument('pdf')
   parser.add_argument('-o', '--outfile', type=str)
-  parser.add_argument('-f', '--minpage', type=int,  default=1)
-  parser.add_argument('-l', '--maxpage', type=int,  default=None)
-  parser.add_argument('-t', '--threads', type=int,  default=2)
+  parser.add_argument('-f', '--minpage', type=int, default=1)
+  parser.add_argument('-l', '--maxpage', type=int, default=None)
+  parser.add_argument('-t', '--threads', type=int, default=2)
   parser.add_argument('--cache-dir', type=str, default=None)
   arguments = parser.parse_args()
   pdf_to_text(arguments.pdf,
